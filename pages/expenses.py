@@ -5,7 +5,7 @@ import unicodedata as uni
 
 # CONFIGURAÇÕES DO SQLITE
 ## CREATE/CONNECT DATABASE (IF NOT EXISTS)
-connect = db.connect('database/data.db', check_same_thread=False)
+connect = db.connect('.database/data.db', check_same_thread=False)
 cursor = connect.cursor()
 
 ## CREATE TABLE (IF NOT EXISTS)
@@ -31,17 +31,16 @@ erro = False # Flag para identificar erros nos inputs do forms
 def remover_acentos(texto):
     return uni.normalize('NFKD', texto).encode('ASCII', 'ignore').decode('ASCII')
 
-with st.form("Despesa"):
+with st.form("Despesa", clear_on_submit=True, border=False, ):
     data = st.date_input("Data", date.today(), format="DD/MM/YYYY")
-    item = st.text_input("Item", placeholder="Ex.: NETFLIX", ) # deixar o texto maiúsculo depois de enviar
+    item = st.text_input("Item", placeholder="Ex.: NETFLIX") # deixar o texto maiúsculo depois de enviar
     valor = st.text_input("Valor", placeholder="Ex. 19,90")
     parcelas = st.selectbox("Número de parcelas", ["","À VISTA", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) # quando for à vista, o valor enviado será zero na validação
     responsavel = st.selectbox("Responsável", ["","GABRIEL", "VITÓRIA"])
-    recorrente = st.radio("É uma despesa recorrente (mensal)?", ["SIM", "NÂO"], index=None,horizontal=True)
+    recorrente = st.radio("É uma despesa recorrente?", ["SIM", "NÂO"], index=None,horizontal=True, help="Despesas que ocorrem mensalmente, como Netflix, aluguel, etc.")
     # pagamento = st.selectbox("Forma de pagamento (*)", ["","DINHEIRO / PIX", "XP", "ITAÚ", "BRADESCO", "SANTANDER"])
     # tipo_gasto = st.selectbox("Tipo de gasto", ["","FIXO", "VARIÁVEL"])
-    st.caption("* Despesa recorrente = Prazo indeterminado. Ex.: Netflix")
-    cadastrado = st.form_submit_button("Cadastrar", use_container_width=True)
+    cadastrado = st.form_submit_button("Cadastrar", use_container_width=True, type="primary")
 
     if cadastrado:
         # Trata as variáveis
@@ -75,5 +74,7 @@ with st.form("Despesa"):
             connect.commit()
             st.success("Despesa registrada com sucesso!")
 
-if st.button("VOLTAR"):
+        st.session_state.clear()
+
+if st.button("VOLTAR", use_container_width=True):
     st.switch_page("pages/main.py")
