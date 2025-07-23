@@ -10,6 +10,19 @@ DATABASE = ".database/data.db"
 connect = db.connect(DATABASE, check_same_thread=False)
 cursor = connect.cursor()
 
+## CREATE TABLE (IF NOT EXISTS)
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS despesas (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        data TEXT NOT NULL,           
+        item TEXT NOT NULL,
+        valor REAL NOT NULL,
+        parcelas INTEGER NOT NULL,
+        responsavel TEXT NOT NULL,
+        recorrente TEXT NOT NULL
+    )
+""")
+
 # GATHERING NECESSARY DATA FROM DATABASE
 cursor.execute("""
                 SELECT SUM(valor) FROM despesas;

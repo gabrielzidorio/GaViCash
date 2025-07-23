@@ -11,19 +11,6 @@ DATABASE = ".database/data.db"
 connect = db.connect(DATABASE, check_same_thread=False)
 cursor = connect.cursor()
 
-## CREATE TABLE (IF NOT EXISTS)
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS despesas (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    data TEXT NOT NULL,           
-    item TEXT NOT NULL,
-    valor REAL NOT NULL,
-    parcelas INTEGER NOT NULL,
-    responsavel TEXT NOT NULL,
-    recorrente TEXT NOT NULL
-)
-""")
-
 st.html(
     "<h1 style='text-align: center; font-size: 2.5em; margin-bottom:-50px'>Cadastrar Despesas</h1>"
 )
@@ -39,11 +26,11 @@ def remover_acentos(texto):
 
 with st.form("formDespesa", clear_on_submit=True, border=False):
     data = st.date_input("Data", date.today(), format="DD/MM/YYYY")
-    item = st.text_input("Item", placeholder="Ex.: NETFLIX") # deixar o texto maiúsculo depois de enviar
+    item = st.text_input("Produto", placeholder="Ex.: NETFLIX") # deixar o texto maiúsculo depois de enviar
     valor = st.text_input("Valor", placeholder="Ex. 19,90")
     parcelas = st.selectbox("Número de parcelas", ["","À VISTA", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) # quando for à vista, o valor enviado será zero na validação
-    responsavel = st.selectbox("Responsável", ["","GABRIEL", "VITÓRIA"])
-    recorrente = st.radio("É uma despesa recorrente?", ["SIM", "NÂO"], index=None,horizontal=True, help="Despesas que ocorrem mensalmente, como Netflix, aluguel, etc.")
+    responsavel = st.radio("Responsável", ["GABRIEL", "VITÓRIA"], index=None, horizontal=True , help="Quem pagou pelo item")
+    recorrente = st.radio("Despesa recorrente", ["SIM", "NÃO"], index=None,horizontal=True, help="Despesas que ocorrem mensalmente, como Netflix, aluguel, etc.")
     cadastrado = st.form_submit_button("Cadastrar", use_container_width=True, type="primary")
     container_form = st.container() # Para separar a lógica dos elementos visíveis na tela
 
@@ -76,6 +63,7 @@ with st.form("formDespesa", clear_on_submit=True, border=False):
                     VALUES (?, ?, ?, ?, ?, ?)
                 """, (data, item, valor, parcelas, responsavel, recorrente))
                 connect.commit()
+                connect.close()
                 sucesso = True
 
 if st.button("Voltar", use_container_width=True):
