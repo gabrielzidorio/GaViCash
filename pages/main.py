@@ -15,7 +15,7 @@ cursor.execute("""
     CREATE TABLE IF NOT EXISTS despesas (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         data TEXT NOT NULL,           
-        item TEXT NOT NULL,
+        produto TEXT NOT NULL,
         valor REAL NOT NULL,
         parcelas INTEGER NOT NULL,
         responsavel TEXT NOT NULL,

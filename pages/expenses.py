@@ -26,9 +26,9 @@ def remover_acentos(texto):
 
 with st.form("formDespesa", clear_on_submit=True, border=False):
     data = st.date_input("Data", date.today(), format="DD/MM/YYYY")
-    item = st.text_input("Produto", placeholder="Ex.: NETFLIX") # deixar o texto maiúsculo depois de enviar
+    produto = st.text_input("Produto", placeholder="Ex.: NETFLIX") # deixar o texto maiúsculo depois de enviar
     valor = st.text_input("Valor", placeholder="Ex. 19,90")
-    parcelas = st.selectbox("Número de parcelas", ["","À VISTA", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) # quando for à vista, o valor enviado será zero na validação
+    parcelas = st.selectbox("Número de parcelas", ["","À VISTA", 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) # quando for à vista, o valor enviado será zero na validação
     responsavel = st.radio("Responsável", ["GABRIEL", "VITÓRIA"], index=None, horizontal=True , help="Quem pagou pelo item")
     recorrente = st.radio("Despesa recorrente", ["SIM", "NÃO"], index=None,horizontal=True, help="Despesas que ocorrem mensalmente, como Netflix, aluguel, etc.")
     cadastrado = st.form_submit_button("Cadastrar", use_container_width=True, type="primary")
@@ -36,32 +36,32 @@ with st.form("formDespesa", clear_on_submit=True, border=False):
 
     if cadastrado:
         # Checa se os campos estão preenchidos
-        if responsavel == "" or parcelas == "" or valor == "" or item == "" or recorrente == None:
+        if responsavel == "" or parcelas == "" or valor == "" or produto == "" or recorrente == None:
             vazio = True
 
         # Trata as variáveis
         if not vazio:
-            data = data.strftime('%d/%m/%Y')
-            item = item.upper().strip()
-            item = remover_acentos(item)
+            # data = data.strftime('%d/%m/%Y')
+            produto = produto.upper().strip()
+            produto = remover_acentos(produto)
             responsavel = remover_acentos(responsavel)
             recorrente = remover_acentos(recorrente)
             valor = valor.strip()
             if parcelas == "À VISTA":
-                parcelas = 0
+                parcelas = 1
 
             try:
                 valor = float(valor.replace(",", ".")) # Aceita "," no número float
-                valor = format(valor, ".2f").replace(".", ",") # Deixa o número no padrão brasileiro   
+              #  valor = format(valor, ".2f").replace(".", ",") # Deixa o número no padrão brasileiro   
             except ValueError:
                 erro = True
 
             # Salva os dados no banco
             if not erro:
                 cursor.execute("""
-                    INSERT INTO DESPESAS (data, item, valor, parcelas, responsavel, recorrente)
+                    INSERT INTO DESPESAS (data, produto, valor, parcelas, responsavel, recorrente)
                     VALUES (?, ?, ?, ?, ?, ?)
-                """, (data, item, valor, parcelas, responsavel, recorrente))
+                """, (data, produto, valor, parcelas, responsavel, recorrente))
                 connect.commit()
                 connect.close()
                 sucesso = True
