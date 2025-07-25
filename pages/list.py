@@ -103,3 +103,4 @@ with tab2:
         st.text(id_del)
         cursor.execute("DELETE FROM despesas WHERE id = ?", (id_del,))
         connect.commit()
+        

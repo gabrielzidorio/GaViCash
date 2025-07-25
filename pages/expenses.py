@@ -12,7 +12,7 @@ connect = db.connect(DATABASE, check_same_thread=False)
 cursor = connect.cursor()
 
 st.html(
-    "<h1 style='text-align: center; font-size: 2.5em; margin-bottom:-50px'>Cadastrar Despesas</h1>"
+    "<p style='text-align: center; font-size: 2.5em; margin-bottom:-50px; font-weight:bold'>Cadastrar Despesas</p>"
 )
 st.divider()
 
@@ -52,7 +52,6 @@ with st.form("formDespesa", clear_on_submit=True, border=False):
 
             try:
                 valor = float(valor.replace(",", ".")) # Aceita "," no número float
-              #  valor = format(valor, ".2f").replace(".", ",") # Deixa o número no padrão brasileiro   
             except ValueError:
                 erro = True
 

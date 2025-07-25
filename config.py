@@ -4,7 +4,7 @@ import streamlit as st
 #PAGES SETTINGS
 st.set_page_config(
     layout="centered",
-    page_icon= "images/main-fav.png"
+    page_icon= "images/main-fav.png", 
 )
 
 #PAGES DEFINITION
