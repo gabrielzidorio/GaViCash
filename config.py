@@ -15,17 +15,17 @@ managment = st.Page("pages/managment.py", title="GaViCash - Gerenciar") #incluir
 # register = st.Page("pages/register.py", title="GaViCash - Cadastro de Despesas") #incluirá as abas cadastro e rankear
 # login = st.Page("pages/login.py", title="Login")
 
-#MENU
-st.sidebar.image("images/main-fav.png")
+# #MENU
+# st.sidebar.image("images/main-fav.png")
 
-if st.sidebar.button("HOME", use_container_width=True, type="tertiary"):
-    st.switch_page("pages/main.py")
+# if st.sidebar.button("HOME", use_container_width=True, type="tertiary"):
+#     st.switch_page("pages/main.py")
 
-if st.sidebar.button("CADASTRAR", use_container_width=True, type="tertiary"):
-    st.switch_page("pages/expenses.py")
+# if st.sidebar.button("CADASTRAR", use_container_width=True, type="tertiary"):
+#     st.switch_page("pages/expenses.py")
 
-if st.sidebar.button("GERENCIAR", use_container_width=True, type="tertiary"):
-    st.switch_page("pages/managment.py")
+# if st.sidebar.button("GERENCIAR", use_container_width=True, type="tertiary"):
+#     st.switch_page("pages/managment.py")
 
 # if st.sidebar.button("GERENCIAR", use_container_width=True, type="tertiary"):
 #     st.switch_page("pages/list.py")

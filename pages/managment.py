@@ -80,41 +80,43 @@ def atualizar_valor():
         st.rerun()
         st.set_page_config(layout="wide")
 
-if "atualizar" not in st.session_state:
-    if st.button("EDITAR DESPESA", type="primary", use_container_width=True):
-        atualizar_valor()
-else:
-    # VALIDA OS DADOS E OS PERSISTE NO BANCO CASO ESTEJAM CERTOS
-    erro = False
-    campo_editado = st.session_state.atualizar["campo_editado"]
-    novo_valor = st.session_state.atualizar["novo_valor"]
-    id_linha = st.session_state.atualizar["id_linha"]
+col1, col2 = st.columns(2)
+with col1:
+    if "atualizar" not in st.session_state:
+        if st.button("EDITAR DESPESA", type="primary", use_container_width=True):
+            atualizar_valor()
+    else:
+        # VALIDA OS DADOS E OS PERSISTE NO BANCO CASO ESTEJAM CERTOS
+        erro = False
+        campo_editado = st.session_state.atualizar["campo_editado"]
+        novo_valor = st.session_state.atualizar["novo_valor"]
+        id_linha = st.session_state.atualizar["id_linha"]
 
-    del st.session_state.atualizar  # Limpa o estado para evitar re-execução
+        del st.session_state.atualizar  # Limpa o estado para evitar re-execução
 
-    if campo_editado == "data":
-        try:
-            novo_valor = dt.datetime.strptime(novo_valor, "%d/%m/%Y").date()
-        except ValueError:
-            st.error("Data inválida! Use o formato DD/MM/YYYY.")
-            erro = True
-    elif campo_editado == "valor":
-        try:
-            novo_valor = float(novo_valor.replace(",", ".")) # Aceita "," no número float
-        except ValueError:
-            st.error("O valor informado é inválido!")
-            erro = True
-    elif type(novo_valor) == str:
-        novo_valor = novo_valor.upper().strip()
-        novo_valor = remover_acentos(novo_valor)
+        if campo_editado == "data":
+            try:
+                novo_valor = dt.datetime.strptime(novo_valor, "%d/%m/%Y").date()
+            except ValueError:
+                st.error("Data inválida! Use o formato DD/MM/YYYY.")
+                erro = True
+        elif campo_editado == "valor":
+            try:
+                novo_valor = float(novo_valor.replace(",", ".")) # Aceita "," no número float
+            except ValueError:
+                st.error("O valor informado é inválido!")
+                erro = True
+        elif type(novo_valor) == str:
+            novo_valor = novo_valor.upper().strip()
+            novo_valor = remover_acentos(novo_valor)
 
-    if not erro:
-        query = f"UPDATE despesas SET {campo_editado} = ? WHERE id = ?"
-        cursor.execute(query, (novo_valor, id_linha))
-        connect.commit()
-        st.rerun()
-        st.set_page_config(layout="wide")
-        st.toast("DESPESA ATUALIZADA COM SUCESSO!")
+        if not erro:
+            query = f"UPDATE despesas SET {campo_editado} = ? WHERE id = ?"
+            cursor.execute(query, (novo_valor, id_linha))
+            connect.commit()
+            st.rerun()
+            st.set_page_config(layout="wide")
+            st.toast("DESPESA ATUALIZADA COM SUCESSO!")
 
 # POP-UP DE EXCLUSÃO
 @st.dialog("EXCLUSÃO DE DADOS")
@@ -129,17 +131,21 @@ def excluir_valor():
         st.rerun()
         st.set_page_config(layout="wide")
 
-if "excluir" not in st.session_state:
-    if st.button("EXCLUIR DESPESA", type="secondary", use_container_width=True):
-        excluir_valor()
-else:
-    id_linha = st.session_state.excluir["id_linha"]
+with col2:
+    if "excluir" not in st.session_state:
+        if st.button("EXCLUIR DESPESA", type="secondary", use_container_width=True):
+            excluir_valor()
+    else:
+        id_linha = st.session_state.excluir["id_linha"]
 
-    cursor.execute("DELETE FROM despesas WHERE id = ?", (id_linha,))
-    connect.commit()
+        cursor.execute("DELETE FROM despesas WHERE id = ?", (id_linha,))
+        connect.commit()
 
-    del st.session_state.excluir  # Limpa o estado para evitar re-execução
+        del st.session_state.excluir  # Limpa o estado para evitar re-execução
 
-    st.rerun()
-    st.set_page_config(layout="wide")
-    st.toast("DESPESA ATUALIZADA COM SUCESSO!")
+        st.rerun()
+        st.set_page_config(layout="wide")
+        st.toast("DESPESA ATUALIZADA COM SUCESSO!")
+
+if st.button("VOLTAR", use_container_width=True):
+    st.switch_page("pages/main.py")
