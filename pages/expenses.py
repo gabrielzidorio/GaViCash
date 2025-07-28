@@ -31,7 +31,7 @@ with st.form("formDespesa", clear_on_submit=True, border=False):
     parcelas = st.selectbox("Número de parcelas", ["","À VISTA", 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) # quando for à vista, o valor enviado será zero na validação
     responsavel = st.radio("Responsável", ["GABRIEL", "VITÓRIA"], index=None, horizontal=True , help="Quem pagou pelo item")
     recorrente = st.radio("Despesa recorrente", ["SIM", "NÃO"], index=None,horizontal=True, help="Despesas que ocorrem mensalmente, como Netflix, aluguel, etc.")
-    cadastrado = st.form_submit_button("Cadastrar", use_container_width=True, type="primary")
+    cadastrado = st.form_submit_button("CADASTRAR", use_container_width=True, type="primary")
     container_form = st.container() # Para separar a lógica dos elementos visíveis na tela
 
     if cadastrado:
@@ -65,7 +65,7 @@ with st.form("formDespesa", clear_on_submit=True, border=False):
                 connect.close()
                 sucesso = True
 
-if st.button("Voltar", use_container_width=True):
+if st.button("VOLTAR", use_container_width=True):
     st.switch_page("pages/main.py")
 
 if erro:

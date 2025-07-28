@@ -2,6 +2,7 @@ import streamlit as st
 import sqlite3 as db
 import datetime as dt
 import unicodedata as uni
+import time
 
 st.set_page_config(layout="wide")
 
@@ -114,9 +115,11 @@ with col1:
             query = f"UPDATE despesas SET {campo_editado} = ? WHERE id = ?"
             cursor.execute(query, (novo_valor, id_linha))
             connect.commit()
+            st.toast("DESPESA ATUALIZADA COM SUCESSO!")
+            time.sleep(1)
             st.rerun()
             st.set_page_config(layout="wide")
-            st.toast("DESPESA ATUALIZADA COM SUCESSO!")
+            
 
 # POP-UP DE EXCLUSÃO
 @st.dialog("EXCLUSÃO DE DADOS")
@@ -142,10 +145,12 @@ with col2:
         connect.commit()
 
         del st.session_state.excluir  # Limpa o estado para evitar re-execução
-
+        
+        st.toast("DESPESA ATUALIZADA COM SUCESSO!")
+        time.sleep(1)
         st.rerun()
         st.set_page_config(layout="wide")
-        st.toast("DESPESA ATUALIZADA COM SUCESSO!")
+
 
 if st.button("VOLTAR", use_container_width=True):
     st.switch_page("pages/main.py")

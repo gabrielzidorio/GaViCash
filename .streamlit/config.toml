@@ -1,3 +1,69 @@
+[server]
+# address =
+# port = 8501
+enableStaticServing = true
+
+[browser]
+# serverAddress = "gavicash.com.br"
+
+# Lato font faces
+[[theme.fontFaces]] 
+family = "lato"
+url = "app/static/Lato-Thin.ttf"
+weight = 100
+style = "normal"
+[[theme.fontFaces]]
+family = "lato"
+url = "app/static/Lato-ThinItalic.ttf"
+weight = 100
+style = "italic"
+[[theme.fontFaces]]
+family = "lato"
+url = "app/static/Lato-Light.ttf"
+weight = 300
+style = "normal"
+[[theme.fontFaces]]
+family = "lato"
+url = "app/static/Lato-LightItalic.ttf"
+weight = 300
+style = "italic"
+[[theme.fontFaces]]
+family = "lato"
+url = "app/static/Lato-Regular.ttf"
+weight = 400
+style = "normal"
+[[theme.fontFaces]]
+family = "lato"
+url = "app/static/Lato-Italic.ttf"
+weight = 400
+style = "italic"
+[[theme.fontFaces]]
+family = "lato"
+url = "app/static/Lato-Bold.ttf"
+weight = 700
+style = "normal"
+[[theme.fontFaces]]
+family = "lato"
+url = "app/static/Lato-BoldItalic.ttf"
+weight = 700
+style = "italic"
+[[theme.fontFaces]]
+family = "lato"
+url = "app/static/Lato-Black.ttf"
+weight = 900
+style = "normal"
+[[theme.fontFaces]]
+family = "lato"
+url = "app/static/Lato-BlackItalic.ttf"
+weight = 900
+style = "italic"
+
 [theme]
 base="dark"
 primaryColor="#2e7d32"
+linkColor = "#2e7d32"
+baseFontSize = 17
+font = "lato"
+baseRadius = "medium"
+buttonRadius = "medium"
+# dataframeBorderColor = "#2e7d32"
