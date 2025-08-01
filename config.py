@@ -12,9 +12,8 @@ st.logo("images/main-fav.png", size="large", )
 main = st.Page("pages/main.py", title="GaViCash - Home") #incluirá dashboards e mostras tabela com despesas cadastradas até aqui
 expenses = st.Page("pages/expenses.py", title="GaViCash - Cadastrar") #incluirá a aba despesas
 managment = st.Page("pages/managment.py", title="GaViCash - Gerenciar") #incluirá a aba despesas
-#list = st.Page("pages/list.py", title="GaViCash - Gerenciar") #incluirá a aba despesas
-# register = st.Page("pages/register.py", title="GaViCash - Cadastro de Despesas") #incluirá as abas cadastro e rankear
-# login = st.Page("pages/login.py", title="Login")
+register = st.Page("pages/register.py", title="GaViCash - Cadastro de Despesas") #incluirá as abas cadastro e rankear
+login = st.Page("pages/login.py", title="Login")
 
 # #MENU
 # st.sidebar.image("images/main-fav.png")
@@ -32,5 +31,5 @@ managment = st.Page("pages/managment.py", title="GaViCash - Gerenciar") #incluir
 #     st.switch_page("pages/list.py")
 
 #NAVIGATION
-pages = st.navigation([main, expenses, managment], position="hidden")
+pages = st.navigation([main, expenses, managment, login, register], position="hidden")
 pages.run()
