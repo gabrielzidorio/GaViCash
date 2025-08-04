@@ -22,7 +22,7 @@ cursor.execute("""
 """)
 
 st.html(
-    "<p style='text-align: center; font-size: 2.5em; margin-bottom:-50px; font-weight:bold'>Cadastro de usuário</p>"
+    "<p style='text-align: center; font-size: 2em; margin-bottom:-50px; font-weight:bold'>Cadastro de usuário</p>"
 )
 st.divider()
 
@@ -30,10 +30,10 @@ erro = False
 
 with st.form("register_form", border=False, clear_on_submit=True):
     username = st.text_input("Usuário", placeholder="Digite seu nome de usuário")
-    password = st.text_input("Senha", type="password", help="Mínimo de 8 caractéres")
-    confirm_password = st.text_input("Confirmar senha", type="password", help="Mínimo de 8 caracteres")
-    email = st.text_input("Email")
-    cadastrado = st.form_submit_button("Enviar", use_container_width=True)
+    password = st.text_input("Senha", type="password", help="Mínimo de 8 caractéres", placeholder="Digite sua senha")
+    confirm_password = st.text_input("Confirmar senha", type="password", placeholder="Confirme sua senha")
+    email = st.text_input("Email", placeholder="Informe um email válido")
+    cadastrado = st.form_submit_button("CADASTRAR", use_container_width=True, type="primary")
     
     if cadastrado:
         if username and password and confirm_password and email:
@@ -68,3 +68,6 @@ with st.form("register_form", border=False, clear_on_submit=True):
             connect.close()            
 
             st.success("Usuário cadastrado com sucesso!")
+
+if st.button("JÁ POSSUO UMA CONTA", use_container_width=True, type="tertiary"):
+    st.switch_page("pages/login.py")

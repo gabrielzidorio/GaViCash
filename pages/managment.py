@@ -3,6 +3,7 @@ import sqlite3 as db
 import datetime as dt
 import unicodedata as uni
 import time
+import streamlit_option_menu as som
 
 st.set_page_config(layout="wide")
 
@@ -23,10 +24,42 @@ nomes_colunas.remove("id")
 
 ids = [linha[0] for linha in dados_banco]
 
-st.html(
-    "<p style='text-align: center; font-size: 2.5em; margin-bottom:-50px; font-weight:bold'>Gerenciar Despesas</p>"
+pagina = som.option_menu(
+    menu_title=None,
+    options=["INÍCIO", "CADASTRAR", "GERENCIAR", "DESCONECTAR"],
+    icons=["house-door", "plus-circle-dotted", "clipboard-data", "box-arrow-right"],
+    default_index=(2),
+    orientation="horizontal",
+    styles={
+        "container": {
+            "padding": "0!important",
+            "background-color": "#0E1117",
+        },
+        "icon": {
+            "color": "white",
+            "font-size": "18px"
+        },
+        "nav-link": {
+            "font-size": "13px",
+            "text-align": "center",
+            "margin": "0px",
+            "--hover-color": "#262730",
+        },
+        "nav-link-selected": {
+            "background-color": "#2e7d32",
+        },
+    }
 )
-st.divider()
+
+if pagina == "INÍCIO":
+    st.switch_page("pages/main.py")
+if pagina == "CADASTRAR":
+    st.switch_page("pages/expenses.py")
+
+# st.html(
+#     "<p style='text-align: center; font-size: 2.5em; margin-bottom:-50px; font-weight:bold'>Gerenciar Despesas</p>"
+# )
+# st.divider()
 
 # Função para remover acentos de uma string
 def remover_acentos(texto):
@@ -76,15 +109,13 @@ def atualizar_valor():
     if st.button("CONFIRMAR", use_container_width=True):
         st.session_state.atualizar = {"campo_editado": campo_editado, "novo_valor": novo_valor, "id_linha": id_linha}
         st.rerun()
-        st.set_page_config(layout="wide")
     if st.button("CANCELAR", use_container_width=True, type="primary"):
         st.rerun()
-        st.set_page_config(layout="wide")
 
 col1, col2 = st.columns(2)
 with col1:
     if "atualizar" not in st.session_state:
-        if st.button("EDITAR DESPESA", type="primary", use_container_width=True):
+        if st.button("EDITAR", type="primary", use_container_width=True):
             atualizar_valor()
     else:
         # VALIDA OS DADOS E OS PERSISTE NO BANCO CASO ESTEJAM CERTOS
@@ -118,9 +149,7 @@ with col1:
             st.toast("DESPESA ATUALIZADA COM SUCESSO!")
             time.sleep(1)
             st.rerun()
-            st.set_page_config(layout="wide")
             
-
 # POP-UP DE EXCLUSÃO
 @st.dialog("EXCLUSÃO DE DADOS")
 def excluir_valor():
@@ -129,14 +158,12 @@ def excluir_valor():
     if st.button("CONFIRMAR", use_container_width=True):
         st.session_state.excluir = {"id_linha": id_linha}
         st.rerun()
-        st.set_page_config(layout="wide")
     if st.button("CANCELAR", use_container_width=True, type="primary"):
         st.rerun()
-        st.set_page_config(layout="wide")
 
 with col2:
     if "excluir" not in st.session_state:
-        if st.button("EXCLUIR DESPESA", type="secondary", use_container_width=True):
+        if st.button("EXCLUIR", type="secondary", use_container_width=True):
             excluir_valor()
     else:
         id_linha = st.session_state.excluir["id_linha"]
@@ -149,8 +176,4 @@ with col2:
         st.toast("DESPESA ATUALIZADA COM SUCESSO!")
         time.sleep(1)
         st.rerun()
-        st.set_page_config(layout="wide")
-
-
-if st.button("VOLTAR", use_container_width=True):
-    st.switch_page("pages/main.py")
+        

@@ -1,5 +1,6 @@
 import streamlit as st
 import sqlite3 as db
+import streamlit_option_menu as som
 
 # CONSTANTES
 DATABASE = ".database/data.db"
@@ -89,6 +90,38 @@ diferenca_vitoria_formatado = f"R$ {abs(diferenca_vitoria):,.2f}".replace(",", "
 # 4.537,14 - full - pnr
 # 179,86 pnr
 
+pagina = som.option_menu(
+    menu_title=None,
+    options=["INÍCIO", "CADASTRAR", "GERENCIAR", "DESCONECTAR"],
+    icons=["house-door", "plus-circle-dotted", "clipboard-data", "box-arrow-right"],
+    default_index=(0),
+    orientation="horizontal",
+    styles={
+        "container": {
+            "padding": "0!important",
+            "background-color": "#0E1117",
+        },
+        "icon": {
+            "color": "white",
+            "font-size": "18px"
+        },
+        "nav-link": {
+            "font-size": "13px",
+            "text-align": "center",
+            "margin": "0px",
+            "--hover-color": "#262730",
+        },
+        "nav-link-selected": {
+            "background-color": "#2e7d32",
+        },
+    }
+)
+
+if pagina == "CADASTRAR":
+    st.switch_page("pages/expenses.py")
+if pagina == "GERENCIAR":
+    st.switch_page("pages/managment.py")
+
 kpi = st.metric("TOTAL", valor_total_formatado, help="Valor total de despesas cadastradas até o momento.", border=True)
 
 b, c = st.columns(2)
@@ -106,11 +139,11 @@ elif devedor == "VITORIA":
 else:
     st.success("Nenhum valor precisa ser transferido!")
 
-col1, col2 = st.columns(2)
-with col1:
-    if st.button("CADASTRAR DESPESAS", use_container_width=True):
-        st.switch_page("pages/expenses.py")
+# col1, col2 = st.columns(2)
+# with col1:
+#     if st.button("CADASTRAR DESPESAS", use_container_width=True):
+#         st.switch_page("pages/expenses.py")
 
-with col2:
-    if st.button("GERENCIAR DESPESAS", use_container_width=True):
-        st.switch_page("pages/managment.py")
+# with col2:
+#     if st.button("GERENCIAR DESPESAS", use_container_width=True):
+#         st.switch_page("pages/managment.py")

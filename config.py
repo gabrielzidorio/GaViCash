@@ -6,7 +6,7 @@ st.set_page_config(
     layout="centered",
     page_icon= "images/main-fav.png"
 )
-st.logo("images/another-three.png", size="large")
+st.logo("images/main-fav.png", size="large")
 
 #PAGES DEFINITION
 main = st.Page("pages/main.py", title="GaViCash - Home") #incluirá dashboards e mostras tabela com despesas cadastradas até aqui
